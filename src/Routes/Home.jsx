@@ -1,18 +1,34 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
-import Card from './components/Card';
+import React, { useEffect, useState } from 'react'
+import Card from '../Components/Card'
+import axios from "axios"
 
-// este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Home = () => {
+
+    const [dentistas, setDentistas] = useState([]);
+    const url = "https://jsonplaceholder.typicode.com/users";
+
+    const obtenerDentistas = async() => {
+        const res = await axios(url)
+        setDentistas(res.data)
+    }
+
+    useEffect(() => {
+        obtenerDentistas();
+    }, [])
+
     return (
-        <main className="">
+        <main className="" >
             <h1>Home</h1>
             <div className='card-grid'>
-                {/* Aquí deberías renderizar las cards */}
+                {dentistas.map((dentista) =>
+                    <Card key={dentista.id}  dentista = {dentista} />
+                )}
             </div>
         </main>
     )
 }
 
-export default Home;
+export default Home
+

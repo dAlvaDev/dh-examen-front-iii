@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
-import Form from "../Components/Form.jsx";
+import React from 'react'
+import Form from '../Components/Form'
 
-// este componenete debera ser estilado como "dark o "light" dependiendo del theme del Context
+//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Contact = () => {
     return (
@@ -14,4 +13,4 @@ const Contact = () => {
     )
 }
 
-export default Contact;
+export default Contact

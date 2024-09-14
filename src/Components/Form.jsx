@@ -1,16 +1,80 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useState } from "react";
+import Message from "../Components/Message";
+
 
 const Form = () => {
-    // Aquí deberán implementar el form completo con sus validaciones
+    //Aqui deberan implementar el form completo con sus validaciones
+
+    const [customer, setCustomer] = useState({
+        name: "",
+        email: "",
+    });
+
+    const [show, setShow] = useState(false);
+    const [error, setError] = useState(false);
+
+    const handleChangeName = (event) => {
+        setCustomer({ ...customer, name: event.target.value });
+    };
+
+    const handleChangeEmail = (event) => {
+        setCustomer({ ...customer, email: event.target.value });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (customer.name.trim().length >= 5 &&
+            emailRegex.test(customer.email)) {
+            setError(false);
+            setShow(true);
+            return;
+        }else {
+            setError(true);
+        }
+    };
+
+    const reset = () => {
+        setCustomer({
+            name: "",
+            email: "",
+        });
+    };
 
     return (
-        <div>
-            <form>
+        <>
+            {show ? (
+                <Message customer={customer} />
+            ) : (
+                <>
+                    <form onSubmit={handleSubmit}>
+                        <label>Nombre: </label>
+                        <input
+                            type="text"
+                            value={customer.name}
+                            onChange={handleChangeName}
+                        />
+                        <label>Email: </label>
+                        <input
+                            type="email"
+                            value={customer.email}
+                            onChange={handleChangeEmail}
+                        />
+                        <button>Enviar</button>
+                        <button onClick={reset} type="button">Reset form</button>
+                    </form>
 
-            </form>
-        </div>
-    )
-}
+
+                </>
+            )}
+
+            {error && (
+                <h4 style={{ color: "red", textAlign: "center" }}>Por favor, verifique su información</h4>
+            )}
+        </>
+    );
+};
 
 export default Form;
